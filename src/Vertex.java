@@ -1,14 +1,16 @@
 
-public class Vertex {	
+public class Vertex implements Comparable{	
 	private String name;
+	private int id;
 	private Edge[] neighbours;
 	private Vertex previous;
 	private int distance;
 	
 	
-	public Vertex(String name) {
+	public Vertex(String name, int id) {
 		this.name = name;
-		distance = 999999;
+		this.distance = 99999;
+		this.id = id;
 	}
 	
 	public void setName(String name) {
@@ -42,4 +44,30 @@ public class Vertex {
 	public int getDistance() {
 		return this.distance;
 	}
+	
+	public int getId() {
+		return this.id;
+	}
+	
+	public String neighboursToString() {
+		String edges = "";
+		for(Edge e : neighbours) {
+			Vertex temp = e.getTarget();
+			edges += temp.getName() + "";
+			if (e.getWeight() != 101) {
+				edges += "["+e.getWeight()+"]";
+			}
+			else {
+				edges += ", ";
+			}
+		}
+		return edges;
+	}
+
+	@Override
+	public int compareTo(Object o) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
 }
