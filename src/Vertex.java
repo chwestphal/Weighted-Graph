@@ -1,8 +1,9 @@
+import java.util.ArrayList;
 
-public class Vertex implements Comparable{	
+public class Vertex implements Comparable<Vertex>{	
 	private String name;
 	private int id;
-	private Edge[] neighbours;
+	private ArrayList<Edge> neighbours;
 	private Vertex previous;
 	private int distance;
 	
@@ -17,8 +18,8 @@ public class Vertex implements Comparable{
 		this.name = name;
 	}
 	
-	public void setNeighbours(Edge[] edges) {
-		this.neighbours = edges;
+	public void addNeighbour(Edge edge) {
+		this.neighbours.add(edge);
 	}
 	
 	public void setPrevious(Vertex previous) {
@@ -29,7 +30,7 @@ public class Vertex implements Comparable{
 		this.distance = distance;
 	}
 	
-	public Edge[] getNeighbours() {
+	public ArrayList<Edge> getNeighbours() {
 		return this.neighbours;
 	}
 	
@@ -65,7 +66,7 @@ public class Vertex implements Comparable{
 	}
 
 	@Override
-	public int compareTo(Object o) {
+	public int compareTo(Vertex vertex) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
