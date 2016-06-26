@@ -5,17 +5,23 @@ public class RandomGraph implements WeightedGraph {
 	private ArrayList<Vertex> vertices;
 	private ArrayList<Vertex> verticesToConnect;
 	private ArrayList<String> vertexContent;
+	private boolean weighted;
 	
 	public RandomGraph(int vertices, int edges) {
-		unweightedGraph(vertices,edges);
+		this.vertices = new ArrayList<>();
+		verticesToConnect = new ArrayList<>();
+		vertexContent = new ArrayList<>();
+		weightedGraph(vertices,edges);
 	}
 
 	public void unweightedGraph(int vertices, int edges) {
-		createGraph(vertices, edges, false);
+		weighted = false;
+		createGraph(vertices, edges);
 	}
 
 	public void weightedGraph(int vertices, int edges) {
-		createGraph(vertices, edges, true);
+		weighted = true;
+		createGraph(vertices, edges);
 	}
 	
 	public void addVertex(String name) {
@@ -30,14 +36,13 @@ public class RandomGraph implements WeightedGraph {
 		vStart.addNeighbour(new Edge(vTarget, weight));
 	}
 
-	private void createGraph(int vertices, int edges, boolean weighted) {
+	private void createGraph(int vertices, int edges) {
 		createGraphContent();
 		createVertices(vertices);
-		createRandomEdges(weighted);
+		createRandomEdges();
 	}
 
 	private void createGraphContent() {
-		vertexContent = new ArrayList<>();
 
 		for (char alphabet = 'A'; alphabet <= 'Z'; alphabet++) {
 			vertexContent.add("" + alphabet);
@@ -45,7 +50,6 @@ public class RandomGraph implements WeightedGraph {
 	}
 
 	private void createVertices(int vertices) {
-		this.vertices = new ArrayList<>();
 		for (int i = 0; i < vertices; i++) {
 			Vertex vertex = new Vertex(vertexContent.get(i), i);
 			this.vertices.add(vertex);
@@ -54,13 +58,14 @@ public class RandomGraph implements WeightedGraph {
 		}
 	}
 
-	private void createRandomEdges(boolean weighted) {
-		verticesToConnect = new ArrayList<>();
+	private void createRandomEdges() {
 		Random rndm = new Random();
-		int weight1 = 101;
-		int weight2 = 101;
-
+		int weight1 = 1;
+		int weight2 = 1;
+		Vertex temp1 = null;
+		Vertex temp2 = null;
 		for (Vertex v : this.vertices) {
+			
 			if (weighted) {
 				weight1 = rndm.nextInt(99) + 1;
 				weight2 = rndm.nextInt(99) + 1;
@@ -77,9 +82,14 @@ public class RandomGraph implements WeightedGraph {
 			v.addNeighbour(new Edge(randVert1, weight1));
 			v.addNeighbour(new Edge(randVert2, weight2));
 
-			this.verticesToConnect.remove(randVert1);
-			this.verticesToConnect.remove(randVert2);
+			if(temp1 != null || temp2 != null) {
+				this.verticesToConnect.remove(temp1);
+				this.verticesToConnect.remove(temp2);
+			}
+			temp1 = randVert1;
+			temp2 = randVert2;
 		}
+
 	}
 
 	/*
@@ -90,7 +100,7 @@ public class RandomGraph implements WeightedGraph {
 	@Override
 	public void printGraph() {
 		for (Vertex v : vertices) {
-			System.out.println(v.getName() + ": " + v.neighboursToString());
+			System.out.println(v.getName() + ": " + v.neighboursToString(weighted));
 		}
 	}
 
@@ -102,7 +112,8 @@ public class RandomGraph implements WeightedGraph {
 	@Override
 	public Vertex getVertex(String name) {
 		String s = name.toUpperCase();
-		for (Vertex v : this.vertices) {
+		for (int i=0; i<vertices.size();i++) {
+			Vertex v = vertices.get(i);
 			if (v.getName().equals(s)) {
 				return v;
 			}
@@ -151,14 +162,13 @@ public class RandomGraph implements WeightedGraph {
 			vertices.add(vertex.getName());
 		}
 		Collections.reverse(vertices);
-
+		
 		System.out.println(vertices + " -> " + target.getDistance());
 
 	}
 
 	public static void main(String args[]) {
 		RandomGraph wg = new RandomGraph(10, 20);
-		wg.unweightedGraph(10, 20);
 		wg.printGraph();
 		wg.distance(wg.getVertex("F"));
 		wg.printShortestPathTo(wg.getVertex("D"));

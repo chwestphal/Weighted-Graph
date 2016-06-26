@@ -10,8 +10,9 @@ public class Vertex implements Comparable<Vertex>{
 	
 	public Vertex(String name, int id) {
 		this.name = name;
-		this.distance = 99999;
+		this.distance = Integer.MAX_VALUE;
 		this.id = id;
+		neighbours = new ArrayList<>();
 	}
 	
 	public void setName(String name) {
@@ -50,12 +51,12 @@ public class Vertex implements Comparable<Vertex>{
 		return this.id;
 	}
 	
-	public String neighboursToString() {
+	public String neighboursToString(boolean weighted) {
 		String edges = "";
 		for(Edge e : neighbours) {
 			Vertex temp = e.getTarget();
 			edges += temp.getName() + "";
-			if (e.getWeight() != 101) {
+			if (weighted) {
 				edges += "["+e.getWeight()+"]";
 			}
 			else {
