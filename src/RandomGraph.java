@@ -25,8 +25,7 @@ public class RandomGraph implements WeightedGraph {
 	}
 	
 	public void addVertex(String name) {
-		int id = vertices.size();
-		Vertex vertex = new Vertex(name,id);
+		Vertex vertex = new Vertex(name);
 		vertices.add(vertex);
 	}
 	
@@ -51,7 +50,7 @@ public class RandomGraph implements WeightedGraph {
 
 	private void createVertices(int vertices) {
 		for (int i = 0; i < vertices; i++) {
-			Vertex vertex = new Vertex(vertexContent.get(i), i);
+			Vertex vertex = new Vertex(vertexContent.get(i));
 			this.vertices.add(vertex);
 			verticesToConnect.add(vertex);
 			verticesToConnect.add(vertex);
@@ -76,8 +75,8 @@ public class RandomGraph implements WeightedGraph {
 			do {
 				randVert1 = this.verticesToConnect.get(rndm.nextInt(verticesToConnect.size()));
 				randVert2 = this.verticesToConnect.get(rndm.nextInt(verticesToConnect.size()));
-			} while (v.getId() == randVert1.getId() || v.getId() == randVert2.getId()
-					|| randVert1.getId() == randVert2.getId());
+			} while (v.compareTo(randVert1) == 1 || v.compareTo(randVert2) == 1
+					|| randVert1.compareTo(randVert2) == 1);
 
 			v.addNeighbour(new Edge(randVert1, weight1));
 			v.addNeighbour(new Edge(randVert2, weight2));

@@ -2,16 +2,14 @@ import java.util.ArrayList;
 
 public class Vertex implements Comparable<Vertex>{	
 	private String name;
-	private int id;
 	private ArrayList<Edge> neighbours;
 	private Vertex previous;
 	private int distance;
 	
 	
-	public Vertex(String name, int id) {
+	public Vertex(String name) {
 		this.name = name;
 		this.distance = Integer.MAX_VALUE;
-		this.id = id;
 		neighbours = new ArrayList<>();
 	}
 	
@@ -47,10 +45,6 @@ public class Vertex implements Comparable<Vertex>{
 		return this.distance;
 	}
 	
-	public int getId() {
-		return this.id;
-	}
-	
 	public String neighboursToString(boolean weighted) {
 		String edges = "";
 		for(Edge e : neighbours) {
@@ -68,8 +62,14 @@ public class Vertex implements Comparable<Vertex>{
 
 	@Override
 	public int compareTo(Vertex vertex) {
-		// TODO Auto-generated method stub
-		return 0;
+		// TODO Auto-generated method stub		
+		if(vertex == this) {
+			return 1;
+		}
+		else {
+			return 0;
+		}
 	}
+	
 	
 }
