@@ -60,7 +60,6 @@ public class Vertex implements Comparable<Vertex>{
 		return edges;
 	}
 
-	@Override
 	public int compareTo(Vertex vertex) {
 		// TODO Auto-generated method stub		
 		if(vertex == this) {
@@ -69,7 +68,5 @@ public class Vertex implements Comparable<Vertex>{
 		else {
 			return 0;
 		}
-	}
-	
-	
+	}	
 }

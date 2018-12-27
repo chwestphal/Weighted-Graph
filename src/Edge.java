@@ -12,14 +12,14 @@ public class Edge {
 		this.weight = weight;
 	}
 	
-	public void setTarget(Vertex target) {
-		this.target = target;
-	}
-	
 	public int getWeight() {
 		return this.weight;
 	}
 	
+	public void setTarget(Vertex target) {
+		this.target = target;
+	}
+
 	public Vertex getTarget() {
 		return this.target;
 	}

@@ -24,30 +24,6 @@ public class RandomGraph implements WeightedGraph {
 		createGraph(vertices, edges);
 	}
 	
-	public void addVertex(String name) {
-		Vertex vertex = new Vertex(name);
-		vertices.add(vertex);
-	}
-	
-	public void addEdge(String start, String target, int weight) {
-		Vertex vStart = this.getVertex(start);
-		Vertex vTarget = this.getVertex(target);
-		vStart.addNeighbour(new Edge(vTarget, weight));
-	}
-
-	private void createGraph(int vertices, int edges) {
-		createGraphContent();
-		createVertices(vertices);
-		createRandomEdges();
-	}
-
-	private void createGraphContent() {
-
-		for (char alphabet = 'A'; alphabet <= 'Z'; alphabet++) {
-			vertexContent.add("" + alphabet);
-		}
-	}
-
 	private void createVertices(int vertices) {
 		for (int i = 0; i < vertices; i++) {
 			Vertex vertex = new Vertex(vertexContent.get(i));
@@ -56,7 +32,12 @@ public class RandomGraph implements WeightedGraph {
 			verticesToConnect.add(vertex);
 		}
 	}
-
+	
+	public void addVertex(String name) {
+		Vertex vertex = new Vertex(name);
+		vertices.add(vertex);
+	}
+	
 	private void createRandomEdges() {
 		Random rndm = new Random();
 		int weight1 = 1;
@@ -90,25 +71,31 @@ public class RandomGraph implements WeightedGraph {
 		}
 
 	}
+	
+   public void addEdge(String start, String target, int weight) {
+		Vertex vStart = this.getVertex(start);
+		Vertex vTarget = this.getVertex(target);
+		vStart.addNeighbour(new Edge(vTarget, weight));
+	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see WeightedGraph01#printGraph()
-	 */
-	@Override
+	private void createGraph(int vertices, int edges) {
+		createGraphContent();
+		createVertices(vertices);
+		createRandomEdges();
+	}
+
+	private void createGraphContent() {
+		for (char alphabet = 'A'; alphabet <= 'Z'; alphabet++) {
+			vertexContent.add("" + alphabet);
+		}
+	}
+
 	public void printGraph() {
 		for (Vertex v : vertices) {
 			System.out.println(v.getName() + ": " + v.neighboursToString(weighted));
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see WeightedGraph01#getElement(java.lang.String)
-	 */
-	@Override
 	public Vertex getVertex(String name) {
 		String s = name.toUpperCase();
 		for (int i=0; i<vertices.size();i++) {
@@ -120,12 +107,6 @@ public class RandomGraph implements WeightedGraph {
 		return null;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see WeightedGraph01#distance(Vertex)
-	 */
-	@Override
 	public void distance(Vertex start) {
 		queue = new PriorityQueue<Vertex>();
 		start.setDistance(0);
@@ -149,21 +130,13 @@ public class RandomGraph implements WeightedGraph {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see WeightedGraph01#printShortestPathTo(Vertex)
-	 */
-	@Override
 	public void printShortestPathTo(Vertex target) {
 		ArrayList<String> vertices = new ArrayList<>();
 		for (Vertex vertex = target; vertex != null; vertex = vertex.getPrevious()) {
 			vertices.add(vertex.getName());
 		}
 		Collections.reverse(vertices);
-		
 		System.out.println(vertices + " -> " + target.getDistance());
-
 	}
 
 	public static void main(String args[]) {
